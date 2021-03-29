@@ -3,34 +3,92 @@ const express = require("express");
 const path = require('path');
 var events = require('events');
 var eventEmitter = new events.EventEmitter();
+const MongoClient = require('mongodb').MongoClient
 
-//var mongoose   = require('mongoose');
-
-//var DB_URI = precess.env.MONGO_DB_URI
-//mongoose.connect('mongodb://node:node@novus.modulusmongo.net:27017/Iganiq8o'); // connect to our database
-// mongoose.connect(DB_URI)
-
-PORT = 3000;
-
+var DB_URI = process.env.MONGO_DB_URI
+console.log(DB_URI)
 const app = express();
 bodyParser = require("body-parser");
 
+PORT = 3000;
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, './build')));
+
+
+// MongoClient.connect(DB_URI, (err, client) => {
+// 	if (err) return console.error(err)
+//   	console.log('Connected to Database !!')
+// 	const db = client.db('todo-app')
+// 	const todos = db.collection('todos')
+
+// 		//CRUD 
+// 	// api routes
+
+// 	app.get('/api/todos', (request, response) => {
+// 		const cursor=todos.find().toArray()
+
+// 		request.body= cursor
+// 		console.log(cursor)
+// 	})
+
+// 	app.post('/api/todos', (request, response) => {
+// 		todos.insertOne(request.body)
+// 			.then( result => {
+// 					console.log(result)
+// 					response.status(200)
+// 					response.body({"status":"ok", "result":result})
+// 			})
+// 			.catch( error => {
+// 					console.log(error)
+// 					response.status(400)
+// 					response.body({"status":"not ok", "error":error})
+// 			})
+// 	})
+// 	app.delete('/api/todos', (request, response) => {
+	
+// 	})
+// 	app.put('/api/todos', (request, response) => {
+		
+// 	})
+// })
+var db;
+const client = new MongoClient(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true }).connect().then(
+	re => {db = client.db("todo-app");}
+);
+// client.connect().then(  db = client.db('todo-app') );
+
+console.log(db);
+
+// const todo_schema = new mongoose.Schema({
+// 	text: String,
+// 	data: Date,
+// 	completed: Boolean, 
+//   });
+// const todo = mongoose.model('todo', todo_schema);
+
+
+
+
+
+
+// var todos=[];
+// sample_todo = {
+// 	"date":"2021-03-29", //yy-mm-dd
+// 	"text":"First Todo", //text
+// 	"completed": true    //bool
+
+// }
+
+//sample toute
+//app.get('/api/todos', (request, response) => { });
+
+
 app.get('/', (request, response) => {
-		res.sendFile(path.join(__dirname, '../my-app/build/index.html'));
-  	});
-
-app.get('/hello-world', (request, response) => {
-
-// response.sendStatus("200");
-
-response.send("Hello World!!");
-
+	res.sendFile(path.join(__dirname, '../my-app/build/index.html'));
 });
 
-app.get('/exit' , (request, response) => {
-	process.exit();
+app.get('/hello-world', (request, response) => {
+	response.send("Hello World!!");
 });
 
 app.get("/test", (request, response) => {
@@ -55,4 +113,8 @@ process.on('exit', function () {
 });
 
 
-// eventEmitter.on('testem', () => console.log("Event test"));
+eventEmitter.on('testem', () => console.log("Event test"));
+
+eventEmitter.on('', () => {
+
+});
