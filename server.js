@@ -15,49 +15,44 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, './build')));
 
 
-// MongoClient.connect(DB_URI, (err, client) => {
-// 	if (err) return console.error(err)
-//   	console.log('Connected to Database !!')
-// 	const db = client.db('todo-app')
-// 	const todos = db.collection('todos')
+MongoClient.connect(DB_URI, (err, client) => {
+	if (err) return console.error(err)
+  	console.log('Connected to Database !!')
+	const db = client.db('todo-app')
+	const todos = db.collection('todos')
 
-// 		//CRUD 
-// 	// api routes
+		//CRUD 
+	// api routes
 
-// 	app.get('/api/todos', (request, response) => {
-// 		const cursor=todos.find().toArray()
+	app.get('/api/todos', (request, response) => {
+		const cursor=todos.find()
+		// request.body= cursor
+		//console.log(cursor)
+	})
 
-// 		request.body= cursor
-// 		console.log(cursor)
-// 	})
-
-// 	app.post('/api/todos', (request, response) => {
-// 		todos.insertOne(request.body)
-// 			.then( result => {
-// 					console.log(result)
-// 					response.status(200)
-// 					response.body({"status":"ok", "result":result})
-// 			})
-// 			.catch( error => {
-// 					console.log(error)
-// 					response.status(400)
-// 					response.body({"status":"not ok", "error":error})
-// 			})
-// 	})
-// 	app.delete('/api/todos', (request, response) => {
+	app.post('/api/todos', (request, response) => {
+		todos.insertOne(request.body)
+			.then( result => {
+					console.log(result)
+					response.status(200)
+					response.body({"status":"ok", "result":result})
+			})
+			.catch( error => {
+					console.log(error)
+					response.status(400)
+					response.body({"status":"not ok", "error":error})
+			})
+	})
+	app.delete('/api/todos/:id', (request, response) => {
 	
-// 	})
-// 	app.put('/api/todos', (request, response) => {
+	})
+	app.put('/api/todos/:id', (request, response) => {
 		
-// 	})
-// })
-var db;
-const client = new MongoClient(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true }).connect().then(
-	re => {db = client.db("todo-app");}
-);
+	})
+})
+
 // client.connect().then(  db = client.db('todo-app') );
 
-console.log(db);
 
 // const todo_schema = new mongoose.Schema({
 // 	text: String,
@@ -118,3 +113,18 @@ eventEmitter.on('testem', () => console.log("Event test"));
 eventEmitter.on('', () => {
 
 });
+
+
+
+
+// MongoClient.connect(DB_URI, function(err, client) {
+// 	var db = client.db("todo-app")
+//     var cursor = db.collection('todos').find();
+
+//     cursor.each(function(err, doc) {
+
+//         console.log(doc);
+
+//     });
+// }); 
+
