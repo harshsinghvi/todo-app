@@ -3,6 +3,7 @@ const express = require("express");
 const path = require('path');
 bodyParser = require("body-parser");
 const MongoClient = require('mongodb').MongoClient
+var ObjectID = require('mongodb').ObjectID
 
 var DB_URI = process.env.MONGO_DB_URI
 console.log(DB_URI)
@@ -61,11 +62,37 @@ async function main()
 					response.json({"status":"not ok", "error":error})
 			})
 	});
-	app.delete('/api/todos/:id', (request, response) => {
-	
+	app.delete('/api/todos/', (request, response) => {
+        // obj = new ObjectID()
+        console.log({_id: ObjectID(request.body['_id'])})
+        todos.deleteOne({_id: ObjectID(request.body['_id'])}).then( result => {
+            console.log(result)
+            response.status(200)
+            response.json({status:"ok", result: result})
+        })
+        .catch( error => {
+                console.log(error)
+                response.status(400)
+                response.json({"status":"not ok", "error":error})
+        })
 	});
-	app.put('/api/todos/:id', (request, response) => {
-		
+	app.put('/api/todos/', (request, response) => {
+		todos.findOneAndUpdate(
+            { _id :ObjectID(request.body['_id'])},
+            {
+                $set: {
+                   name: request.body['name'],
+                   completed: request.body['completed']
+                }
+            }).then( result => {
+            console.log(result)
+            response.status(200)
+            response.json({status:"ok", result: result})
+            }).catch( error => {
+                console.log(error)
+                response.status(400)
+                response.json({"status":"not ok", "error":error})
+            })
 	});
 
     app.get('/', (request, response) => {
@@ -73,7 +100,7 @@ async function main()
     });
     
     app.listen(PORT, function() {
-        console.log('Example app listening on port 3000!');
+        console.log('Todo App listening on port 3000!');
     });
 
 }
