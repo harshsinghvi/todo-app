@@ -3,7 +3,8 @@ const express = require("express");
 const path = require('path');
 bodyParser = require("body-parser");
 const MongoClient = require('mongodb').MongoClient
-var ObjectID = require('mongodb').ObjectID
+const ObjectID = require('mongodb').ObjectID
+var cors = require('cors')
 
 var DB_URI = process.env.MONGO_DB_URI
 console.log(DB_URI)
@@ -12,7 +13,7 @@ const app = express();
 PORT = 3000;
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, './build')));
-
+app.use(cors())
 
 
 async function main()
