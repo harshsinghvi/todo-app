@@ -63,11 +63,12 @@ async function main()
 					response.json({"status":"not ok", "error":error})
 			})
 	});
-	app.delete('/api/todos/', (request, response) => {
+	app.delete('/api/todos', (request, response) => {
         // obj = new ObjectID()
-        console.log({_id: ObjectID(request.body['_id'])})
+        console.log(request.body["_id"]);
+        console.log({_id: ObjectID(request.body['_id'])});
         todos.deleteOne({_id: ObjectID(request.body['_id'])}).then( result => {
-            console.log(result)
+            console.log(result["deletedCount"])
             response.status(200)
             response.json({status:"ok", result: result})
         })
@@ -77,7 +78,7 @@ async function main()
                 response.json({"status":"not ok", "error":error})
         })
 	});
-	app.put('/api/todos/', (request, response) => {
+	app.put('/api/todos', (request, response) => {
 		todos.findOneAndUpdate(
             { _id :ObjectID(request.body['_id'])},
             {
