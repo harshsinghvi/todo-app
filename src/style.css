@@ -2,3 +2,29 @@
 {
     color: aquamarine;
 }
+
+.table{
+    font-size: x-large;
+
+    /* table-layout: fixed; */
+    width: 500px; 
+  
+    /* color: teal; */
+}
+
+.round{
+    border-radius: 25px;
+    border: 2px solid teal;
+    padding: 20px; 
+    width: 500px;
+    /* height: 150px;  */
+}
+
+.roundred{
+    font-size: larger;
+    border-radius: 25px;
+    border: 2px solid goldenrod;
+    padding: 20px; 
+    width: 500px;
+    /* height: 150px;  */
+}

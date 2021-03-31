@@ -1,7 +1,8 @@
+import { ObjectID } from 'bson';
 import React, { Component } from 'react';
 import './style.css'
 
-const URL = "http://localhost:3000/api";
+const URL = "http://localhost:3000/api/todos";
 
 class TodoList extends Component
 {
@@ -11,9 +12,7 @@ class TodoList extends Component
         this.state = {data:[]};
         // updateList(this);
         this.updateList = this.updateList.bind(this);
-        // this.handleChange = this.handleChange.bind(this);
-
-        
+        // this.handleChange = this.handleChange.bind(this);   
     }
 
     componentDidMount(){
@@ -21,7 +20,7 @@ class TodoList extends Component
     }
 
     async updateList(){
-        const response = await fetch(URL+'/todos', {
+        const response = await fetch(URL, {
             method: 'GET'
         });
         var data = await response.json();
@@ -31,25 +30,62 @@ class TodoList extends Component
         // .then(response =>  response.json())
         // .then(data => console.log(data)).catch(console.log("Error") );
     }
-    updateTodo(){
+    deleteTodo(_id){
+        console.log(_id);
+        fetch(URL,{
+            method:"DELETE", 
+            body:JSON.stringify({
+                "_id": _id
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        }).then( response => {console.log(response); this.updateList() } ).catch(error => {console.log(error)});
 
     }
-    deleteTodo(){
+    handleUpdateChecks(_id){
+        // console.log(event.target._id);
+        var i = this.state.data.findIndex(t => t["_id"] == _id)
+        // console.log(i);
+        // console.log(_id + " " + this.state.data[i]['completed']);
+        var temp = this.state.data;
+        temp[i]['completed'] = ! this.state.data[i]['completed']
+        this.setState({data:temp });
+        console.log(_id);
+        fetch(URL,{
+            method:"PUT", 
+            body:JSON.stringify(temp[i]),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        }).then( response => {console.log(response);  this.updateList(); } ).catch(error => {console.log(error)});
 
-    }
-    toggleUpdate(){
+        
 
     }
     render(){
         return(
             <div>
-            <h1> Todo List </h1>
-            <button onClick={this.updateList} > Update </button>
-            <br />
-            <a>List </a>
+            {/* <button onClick={this.updateList} > Update </button> */}
+            {/* <br /> */}
             
-            {this.state.data.map(d => (<li key={d.date}>{d.name}</li>))} 
+            {/* {this.state.data.map(d => (<li key={d.date}>{d.name}</li>))}  */}
 
+            <br />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+            <center><table className="table fixed round">
+            
+            {this.state.data.map(d => (
+            <tr key={d.date}>  
+                <col width="10px" />
+                <col width="150px" />
+                <col width="10px" />
+                <td><input id={d._id} type="checkbox" checked={d.completed} onChange={() => { this.handleUpdateChecks(d._id)}}/> </td> 
+                <td> {d.name} </td> 
+                <td> <a onClick={() => {this.deleteTodo(d._id)}} ><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+            </tr>))} 
+
+            </table></center>
             </div>
         );
     }
