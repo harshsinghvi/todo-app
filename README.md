@@ -1,4 +1,4 @@
-# TODO APP with React, node, mongo
+# TODO APP with React, Node, Express, mongodb and Redux
 
 ## Usage:
 
