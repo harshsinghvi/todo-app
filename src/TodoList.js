@@ -1,21 +1,34 @@
 import { ObjectID } from 'bson';
 import React, { Component } from 'react';
 import './style.css'
+import {incrementCount, decrementCount, setTotal,setCount} from './redux/actions'
+import {connect} from 'react-redux'
 
 const URL = "http://localhost:3000/api/todos";
 // const URL = process.env.URL + '/api/todos'
 
 class TodoList extends Component
 {
+    
     constructor(props)
     {
         super(props);
-        this.state = {data:[]};
+        this.state = {data:[], count: 0, total:0};
         // updateList(this);
         this.updateList = this.updateList.bind(this);
         // this.handleChange = this.handleChange.bind(this);   
     }
 
+    handleBtnActionIncrement = () => {
+        this.props.onIncrementClick(this.state.count)
+      }
+      
+    handleBtnActionDecrement = () => {
+    this.props.onDecrementClick(this.state.count)
+    }
+    handleActionSetTotal = () => {
+        this.props.onSetTotal(this.state.total)
+    }
     componentDidMount(){
         this.updateList()
     }
@@ -26,7 +39,20 @@ class TodoList extends Component
         });
         var data = await response.json();
         console.log(data);
-        this.setState({data: data});
+        var c =0;
+        for(var i =0; i<data.length;i++)
+        {
+            if( data[i].completed == true)
+            {
+                c = c+1;
+            }
+        }
+        // this.mapStateToProps()
+        this.setState({data: data,count:c, total: data.length});
+        // handleActionSetTotal()
+        this.props.onSetTotal(this.state.total)
+        this.props.onSetCount(this.state.count)
+
         // fetch('URL'+"/todos")
         // .then(response =>  response.json())
         // .then(data => console.log(data)).catch(console.log("Error") );
@@ -50,6 +76,19 @@ class TodoList extends Component
         // console.log(i);
         // console.log(_id + " " + this.state.data[i]['completed']);
         var temp = this.state.data;
+        var count = this.state.count;
+        if(this.state.data[i].completed)
+        {
+            // decrementCount(count);
+            this.handleBtnActionDecrement()
+            this.setState({ count: --count });
+        }
+        else{
+            // incrementCount(count);
+            this.handleBtnActionIncrement()
+            this.setState({ count: ++count });
+        }
+        // console.log("count  "+count);
         temp[i]['completed'] = ! this.state.data[i]['completed']
         this.setState({data:temp });
         console.log(_id);
@@ -60,10 +99,8 @@ class TodoList extends Component
                 'Content-type': 'application/json; charset=UTF-8'
             }
         }).then( response => {console.log(response);  this.updateList(); } ).catch(error => {console.log(error)});
-
-        
-
     }
+    
     render(){
         return(
             <div>
@@ -93,4 +130,29 @@ class TodoList extends Component
 
 };
 
-export default TodoList
+const mapStateToProps = (state) => {
+    return {
+      count: state.counter.count,
+      total: state.counter.total
+    }
+  }
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      onIncrementClick: (count) => {  
+        dispatch(incrementCount(count))
+      },
+      onDecrementClick: (count) => {
+        if(count !== 0) 
+        dispatch(decrementCount(count))
+      },
+      onSetTotal:(total) => {
+          dispatch(setTotal(total))
+      },
+      onSetCount:(count) => {
+          dispatch(setCount(count))
+      }
+    }
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
