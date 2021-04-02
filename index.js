@@ -23,18 +23,11 @@ async function main()
     const db = await client.db('todo-app');
 	const todos = await db.collection('todos')
 
-    // console.log(await todos.find().toArray());
-    // todos.find().toArray()
-    // .then(results => {
-    // //  console.log(results)
-    // });
-
     //CRUD 
 	// api routes
 
 	app.get('/api/todos', async (request, response) => {
 		const cursor= await todos.find().toArray();
-		// response.body = cursor
         response.json(cursor)
 		console.log(cursor);
 	});
@@ -64,7 +57,6 @@ async function main()
 			})
 	});
 	app.delete('/api/todos', (request, response) => {
-        // obj = new ObjectID()
         console.log(request.body["_id"]);
         console.log({_id: ObjectID(request.body['_id'])});
         todos.deleteOne({_id: ObjectID(request.body['_id'])}).then( result => {
@@ -98,11 +90,11 @@ async function main()
 	});
 
     app.get('/', (request, response) => {
-        res.sendFile(path.join(__dirname, '../my-app/build/index.html'));
+        response.sendFile(path.join(__dirname, '../my-app/build/index.html'));
     });
     
     app.listen(PORT, function() {
-        console.log('Todo App listening on port 3000!');
+        console.log('Todo App listening on port '+ PORT +' !');
     });
 
 }
