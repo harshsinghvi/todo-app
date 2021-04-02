@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import './style.css'
 
-const URL = process.env.URL+":"+process.env.PORT+"/api/todos" || "http://localhost:3000/api/todos";
+// const URL = process.env.URL+":"+process.env.PORT+"/api/todos" || "http://localhost:3000/api/todos";
 // const URL = process.env.URL + '/api/todos'
+const URL = window.location.href+'api/todos' || "http://localhost:3000/api/todos";
 
 class TodoAdd extends Component
 {

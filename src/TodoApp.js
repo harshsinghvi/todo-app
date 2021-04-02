@@ -4,8 +4,8 @@ import {incrementCount, decrementCount, setTotal,setCount} from './redux/actions
 import {connect} from 'react-redux'
 import TodoAdd from './TodoAdd'
 
-const URL = process.env.URL+":"+process.env.PORT+"/api/todos" || "http://localhost:3000/api/todos";
-
+// const URL = process.env.URL+":"+process.env.PORT+"/api/todos" || "http://localhost:3000/api/todos";
+const URL = window.location.href+'api/todos' || "http://localhost:3000/api/todos";
 class TodoApp extends Component
 {
     
