@@ -10,7 +10,7 @@ var DB_URI = process.env.MONGO_DB_URI
 console.log(DB_URI)
 const app = express();
 
-PORT = 3000;
+PORT = 80;
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, './build')));
 app.use(cors())
