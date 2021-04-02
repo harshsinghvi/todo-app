@@ -10,7 +10,7 @@ var DB_URI = process.env.MONGO_DB_URI
 console.log(DB_URI)
 const app = express();
 
-PORT = 80;
+PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, './build')));
 app.use(cors())
@@ -93,8 +93,8 @@ async function main()
         response.sendFile(path.join(__dirname, '../my-app/build/index.html'));
     });
     
-    app.listen(PORT, function() {
-        console.log('Todo App listening on port '+ PORT +' !');
+    app.listen(PORT,'0.0.0.0', function() {
+        console.log('Todo App listening on port ${PORT}!');
     });
 
 }
