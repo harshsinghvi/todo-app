@@ -1,4 +1,5 @@
 # TODO APP with React, Node, Express, mongodb and Redux
+> I have made the backend on Express Js and there by the Bcakend serves the static files and the index.html file generated React UI. I have used Redux to store counts of Completed tasks and total tasks between Footer component and the Main app component (TodoApp.js). Backend connects to Database(MongoDB) and has API endpoints. 
 
 ## Usage:
 
