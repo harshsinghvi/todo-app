@@ -4,7 +4,7 @@ import {incrementCount, decrementCount, setTotal,setCount} from './redux/actions
 import {connect} from 'react-redux'
 import TodoAdd from './TodoAdd'
 
-const URL = "http://localhost:80/api/todos";
+const URL = process.env.URL || "http://localhost:80/api/todos";
 
 class TodoApp extends Component
 {
