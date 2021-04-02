@@ -11,7 +11,7 @@ cd todo-app
 - install Dependencies
 `npm install`
 - build ReactUI FrontEnd `npm run buid`
-- set the **MONGO_DB_URI** environment variable so that our backend can access Database `export MONGO_DB_URI="mongodb+srv://<USER>:<PASS>@cluster0.******.mongodb.net/todo-app"`
+- set the **MONGO_DB_URI** environment variable so that our backend can access Database `export MONGO_DB_URI="mongodb+srv://<USER>:<PASS>@cluster0.******.mongodb.net/todo-app"` and make a database name `todo-app` and a collection in it names `todos`.
 - Run the Server 
 `npm start` 
 > index.js serves backend and frontend together
