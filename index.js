@@ -94,7 +94,7 @@ async function main()
     });
     
     app.listen(PORT,'0.0.0.0', function() {
-        console.log('Todo App listening on port ${PORT}!');
+        console.log('Todo App listening on port '+ PORT+' !');
     });
 
 }
