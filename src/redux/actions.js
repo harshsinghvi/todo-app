@@ -1,6 +1,5 @@
 export const incrementCount = count => {
     const num = count+1
-    console.log("increment redux "+num);
     return {
     type: 'INCREMENT_COUNT',
     count: num
@@ -9,8 +8,6 @@ export const incrementCount = count => {
   
 export const decrementCount = count => {
     const num = count - 1
-    console.log("decrement redux "+num)
-
     return {
       type: 'DECREMENT_COUNT',
       count: num
@@ -18,7 +15,6 @@ export const decrementCount = count => {
   }
 
 export const setTotal = total => {
-      console.log("Redux total = " + total)
       return {
           type: 'SET_TOTAL',
           total: total

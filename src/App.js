@@ -1,12 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
-import TodoAdd from './TodoAdd.js';
-import TodoList from './TodoList';
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import store from './redux/store'
+
+import TodoApp from './TodoApp';
+import { Provider } from 'react-redux' //Redux Provider
+import store from './redux/store' //Redux Store
 import Footer from './footer'
-// const store = createStore(store)
 
 function App() {
   return (
@@ -14,8 +11,7 @@ function App() {
 
     <div className="App">
       <h1> Todo App</h1>
-      <TodoAdd />
-      <TodoList />
+      <TodoApp />
       <Footer />
     </div>
     </Provider>
