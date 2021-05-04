@@ -89,7 +89,7 @@ class TodoApp extends Component
         return(
             <div>
             <TodoAdd update={this.updateList} /> 
-            <br />
+            <p className="warning">WARNING: This TODO APP demo is Public. Please create todos wisely. And be feel free to delete any bad todos you see.</p>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
             <center><table className="table fixed round">
         
